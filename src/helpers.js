@@ -32,7 +32,7 @@ module.exports.getConfig = () => {
   const defaults = {
     type: 'functional',
     dir: 'src/components',
-    extension: 'js',
+    extension: 'tsx',
   };
 
   const globalOverrides = requireOptional(
@@ -74,7 +74,7 @@ module.exports.buildPrettifier = (prettierConfig) => {
   }
 
   return (text) => {
-    return prettier.format(text, config);
+    return prettier.format(text, {...config, parser: 'typescript'});
   }
 }
 

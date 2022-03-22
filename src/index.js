@@ -54,12 +54,14 @@ program
 const [componentName] = program.args;
 
 // Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.js`;
+const templatePath = `./templates/${program.type}.tsx`;
+const storyTemplatePath = `./templates/storybook.tsx`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
 const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const indexPath = `${componentDir}/index.${program.extension}`;
+const storyPath = `${componentDir}/${componentName}.stories.${program.extension}`;
+const indexPath = `${componentDir}/index.ts`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
 const indexTemplate = prettify(`\
@@ -114,8 +116,22 @@ mkDirPromise(componentDir)
     logItemCompletion('Component built and saved to disk.');
     return template;
   })
+  // storybook
+  .then(() => readFilePromiseRelative(storyTemplatePath))
   .then((template) =>
-    // We also need the `index.js` file, which allows easy importing.
+    // Replace our placeholders with real data (so far, just the component name)
+    template.replace(/COMPONENT_NAME/g, componentName)
+  )
+  .then((template) =>
+    // Format it using prettier, to ensure style consistency, and write to file.
+    writeFilePromise(storyPath, prettify(template))
+  )
+  .then((template) => {
+    logItemCompletion('Storybook file built and saved to disk.');
+    return template;
+  })
+  // index
+  .then((template) =>
     writeFilePromise(indexPath, prettify(indexTemplate))
   )
   .then((template) => {
