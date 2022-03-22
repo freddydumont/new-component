@@ -30,9 +30,7 @@ module.exports.getConfig = () => {
   const currentPath = process.cwd();
 
   const defaults = {
-    type: 'functional',
     dir: 'src/components',
-    extension: 'tsx',
   };
 
   const globalOverrides = requireOptional(
@@ -88,17 +86,7 @@ const colors = {
   darkGray: [90, 90, 90],
 };
 
-const logComponentType = (selected) =>
-  ['class', 'pure-class', 'functional']
-    .sort((a, b) => (a === selected ? -1 : 1))
-    .map((option) =>
-      option === selected
-        ? `${chalk.bold.rgb(...colors.blue)(option)}`
-        : `${chalk.rgb(...colors.darkGray)(option)}`
-    )
-    .join('  ');
-
-module.exports.logIntro = ({ name, dir, type }) => {
+module.exports.logIntro = ({ name, dir }) => {
   console.info('\n');
   console.info(
     `✨  Creating the ${chalk.bold.rgb(...colors.gold)(name)} component ✨`
@@ -106,10 +94,8 @@ module.exports.logIntro = ({ name, dir, type }) => {
   console.info('\n');
 
   const pathString = chalk.bold.rgb(...colors.blue)(dir);
-  const typeString = logComponentType(type);
 
   console.info(`Directory:  ${pathString}`);
-  console.info(`Type:       ${typeString}`);
   console.info(
     chalk.rgb(...colors.darkGray)('=========================================')
   );

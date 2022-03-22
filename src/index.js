@@ -13,7 +13,6 @@ const {
   logError,
 } = require('./helpers');
 const {
-  requireOptional,
   mkDirPromise,
   readFilePromiseRelative,
   writeFilePromise,
@@ -34,33 +33,23 @@ program
   .version(version)
   .arguments('<componentName>')
   .option(
-    '-t, --type <componentType>',
-    'Type of React component to generate (default: "functional")',
-    /^(class|pure-class|functional)$/i,
-    config.type
-  )
-  .option(
     '-d, --dir <pathToDirectory>',
     'Path to the "components" directory (default: "src/components")',
     config.dir
-  )
-  .option(
-    '-x, --extension <fileExtension>',
-    'Which file extension to use for the component (default: "js")',
-    config.extension
   )
   .parse(process.argv);
 
 const [componentName] = program.args;
 
-// Find the path to the selected template file.
-const templatePath = `./templates/${program.type}.tsx`;
+const EXTENSION = 'tsx'
+
+const templatePath = `./templates/component.tsx`;
 const storyTemplatePath = `./templates/storybook.tsx`;
 
 // Get all of our file paths worked out, for the user's project.
 const componentDir = `${program.dir}/${componentName}`;
-const filePath = `${componentDir}/${componentName}.${program.extension}`;
-const storyPath = `${componentDir}/${componentName}.stories.${program.extension}`;
+const filePath = `${componentDir}/${componentName}.${EXTENSION}`;
+const storyPath = `${componentDir}/${componentName}.stories.${EXTENSION}`;
 const indexPath = `${componentDir}/index.ts`;
 
 // Our index template is super straightforward, so we'll just inline it for now.
@@ -69,7 +58,7 @@ export * from './${componentName}';
 export { default } from './${componentName}';
 `);
 
-logIntro({ name: componentName, dir: componentDir, type: program.type });
+logIntro({ name: componentName, dir: componentDir });
 
 // Check if componentName is provided
 if (!componentName) {
