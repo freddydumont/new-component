@@ -1,6 +1,6 @@
 {
   "name": "@freddydumont/new-component",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "CLI for creating new React components. Fork of new-component.",
   "homepage": "https://github.com/freddydumont/new-component",
   "repository": {
@@ -25,6 +25,9 @@
   "license": "MIT",
   "bin": {
     "new-component": "./src/index.js"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
     "chalk": "^4.1.2",
