@@ -26,6 +26,7 @@
   "bin": {
     "new-component": "./src/index.js"
   },
+  "private": "false",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
