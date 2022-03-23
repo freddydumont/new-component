@@ -31,6 +31,7 @@ const config = getConfig();
 const prettify = buildPrettifier(config.prettierConfig);
 
 program
+  .storeOptionsAsProperties()
   .version(version)
   .arguments('<componentName>')
   .description(logDescription())
