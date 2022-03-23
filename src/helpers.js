@@ -86,6 +86,18 @@ const colors = {
   darkGray: [90, 90, 90],
 };
 
+module.exports.logDescription = () => {
+  return `Generate component directory and file templates:
+
+  ${chalk.rgb(...colors.darkGray)('[cwd]')}
+    ${chalk.bold.rgb(...colors.blue)('src')}
+      ${chalk.bold.rgb(...colors.blue)('components')}
+        ${chalk.bold.rgb(...colors.gold)('MyComponent')}
+          index.ts
+          ${chalk.bold.rgb(...colors.gold)('MyComponent')}.stories.tsx
+          ${chalk.bold.rgb(...colors.gold)('MyComponent')}.tsx`
+}
+
 module.exports.logIntro = ({ name, dir }) => {
   console.info('\n');
   console.info(

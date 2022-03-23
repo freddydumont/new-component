@@ -11,6 +11,7 @@ const {
   logItemCompletion,
   logConclusion,
   logError,
+  logDescription,
 } = require('./helpers');
 const {
   mkDirPromise,
@@ -32,9 +33,10 @@ const prettify = buildPrettifier(config.prettierConfig);
 program
   .version(version)
   .arguments('<componentName>')
+  .description(logDescription())
   .option(
     '-d, --dir <pathToDirectory>',
-    'Path to the "components" directory (default: "src/components")',
+    'Path to the "components" directory',
     config.dir
   )
   .parse(process.argv);
